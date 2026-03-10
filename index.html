@@ -1,406 +1,338 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Académico</title>
+    <title>Biblioteca Virtual - UPEMOR</title>
     <link rel="icon" type="image/png" href="imagenes/favicon.PNG">
-    
+    <style>
+    /* ESTILO INSTITUCIONAL TECH GRADIENT - v3.0 PIV */
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+    :root {
+        /* Colores base del Logo */
+        --logo-orange: #FFB703;
+        --logo-red: #EF233C;
+        --logo-purple: #4B2C82;
+        --logo-gradient: linear-gradient(135deg, #FFB703 0%, #EF233C 50%, #4B2C82 100%);
+        
+        /* Sistema de diseño */
+        --bg-ice: #F0F4F8; /* Solicitado azul casi blanco */
+        --white-glass: rgba(255, 255, 255, 0.9);
+        --text-dark: #1A1D23;
+        --shadow-tech: 0 15px 35px rgba(75, 44, 130, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--bg-ice);
+        color: var(--text-dark);
+        overflow-x: hidden;
+    }
+
+    /* ───────── NAVBAR TECH GRADIENT ───────── */
+    .navbar {
+        background: var(--white-glass);
+        backdrop-filter: blur(12px);
+        padding: 1rem 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid;
+        border-image: var(--logo-gradient) 1;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .brand-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logo-navbar {
+        height: 50px;
+        width: auto;
+    }
+
+    .navbar h2 {
+        font-weight: 800;
+        font-size: 1rem;
+        color: var(--logo-purple);
+        letter-spacing: -0.5px;
+    }
+
+    .admin-link {
+        color: var(--text-dark);
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 8px 18px;
+        border-radius: 8px;
+        transition: 0.3s;
+        border: 2px solid var(--logo-purple);
+        background: transparent;
+    }
+
+    .admin-link:hover {
+        background: var(--logo-gradient);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 5px 15px rgba(239, 35, 60, 0.3);
+    }
+
+    /* ───────── REGISTRO OBLIGATORIO (Mismo script, nuevo diseño) ───────── */
+    #overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: var(--bg-ice);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        padding: 20px;
+    }
+
+    #modal {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 30px;
+        width: 100%;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 25px 60px rgba(75, 44, 130, 0.15);
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+    }
+
+    #modal::before {
+        content: '';
+        position: absolute;
+        top: -2px; left: -2px; right: -2px; bottom: -2px;
+        background: var(--logo-gradient);
+        z-index: -1;
+        border-radius: 32px;
+    }
+
+    #modal h3 {
+        font-weight: 800;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        background: var(--logo-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    #modal p { color: #718096; margin-bottom: 2rem; font-size: 0.95rem; }
+
+    #modal input {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 12px;
+        border: 2px solid #E2E8F0;
+        border-radius: 12px;
+        font-size: 1rem;
+        background: #F8FAFC;
+        transition: 0.3s;
+    }
+
+    #modal input:focus {
+        outline: none;
+        border-color: var(--logo-red);
+        background: white;
+        box-shadow: 0 0 0 4px rgba(239, 35, 60, 0.1);
+    }
+
+    #btnRegistrar {
+        width: 100%;
+        padding: 16px;
+        background: var(--logo-gradient);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s ease;
+    }
+
+    #btnRegistrar:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(239, 35, 60, 0.4);
+    }
+
+    /* ───────── CONTENIDO PRINCIPAL TECH ───────── */
+    #contenido {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 0 20px;
+    }
+
+    .header-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .logo-main {
+        height: 160px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-weight: 800;
+        font-size: 3rem;
+        letter-spacing: -1.5px;
+        margin-bottom: 10px;
+        background: var(--logo-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h5 { font-weight: 400; color: #718096; }
+
+    /* TARJETAS CUATRIMESTRE TECH-GLASS */
+    .cuatris {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    .cuatris button {
+        background: var(--white-glass);
+        backdrop-filter: blur(5px);
+        border: 2px solid transparent;
+        padding: 50px 30px;
+        border-radius: 24px;
+        color: var(--logo-purple);
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: var(--shadow-tech);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cuatris button::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: var(--logo-gradient);
+        opacity: 0;
+        transition: 0.4s;
+        z-index: -1;
+    }
+
+    .cuatris button:hover {
+        transform: translateY(-8px);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 20px 45px rgba(75, 44, 130, 0.15);
+    }
+
+    .cuatris button:hover::before {
+        opacity: 1;
+    }
+
+    /* SECCIÓN COMENTARIOS */
+    .section-comentarios {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 28px;
+        margin-top: 100px !important;
+        text-align: center;
+        box-shadow: var(--shadow-tech);
+        border: 1px solid rgba(75, 44, 130, 0.05);
+    }
+
+    .section-comentarios h3 {
+        color: var(--logo-purple);
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    textarea#comentario {
+        width: 100%;
+        height: 140px;
+        background: var(--bg-ice);
+        border: 2px solid transparent;
+        border-radius: 18px;
+        padding: 20px;
+        font-family: inherit;
+        font-size: 1rem;
+        margin: 20px 0;
+        transition: 0.3s;
+    }
+
+    textarea#comentario:focus {
+        outline: none;
+        border-color: var(--logo-purple);
+        background: white;
+    }
+
+    button[onclick="enviarComentario()"] {
+        background: var(--logo-purple);
+        color: white;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button[onclick="enviarComentario()"]:hover {
+        background: var(--logo-red);
+        transform: scale(1.03);
+    }
+
+    /* FOOTER */
+    .footer {
+        padding: 50px 8%;
+        margin-top: 100px;
+        text-align: center;
+        background: white;
+        border-top: 2px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+    }
+
+    .footer::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 2px;
+        background: var(--logo-gradient);
+    }
+
+    .footer p { color: #718096; font-size: 0.9rem; margin-top: 10px; }
+    .footer-brand { font-weight: 800; color: var(--logo-purple); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .navbar { padding: 1rem 5%; justify-content: center; }
+        .logo-main { height: 120px; }
+        h1 { font-size: 2.2rem; }
+        #contenido { margin: 30px auto; }
+        .cuatris { grid-template-columns: 1fr; gap: 15px; }
+        .cuatris button { padding: 35px 20px; }
+        #modal { padding: 2rem 1.5rem; }
+    }
+    </style>
 </head>
-<meta charset="UTF-8">
-<title>Portal Académico</title>
-
-<style>
-/* ESTILO INSTITUCIONAL TECH - PORTAL ACADÉMICO v2 */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
-
-:root {
-    --primary-purple: #4B2C82;
-    --action-red: #EF233C; /* Rojo moderno vibrante */
-    --accent-gold: #FFB703;
-    --ice-blue: #F0F4F8; /* Azul casi blanco solicitado */
-    --white: #FFFFFF;
-    --text-main: #1A1D23;
-    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: var(--ice-blue);
-    color: var(--text-main);
-    overflow-x: hidden;
-}
-
-/* ───────── NAVBAR MODERNA ───────── */
-.navbar {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 1.2rem 8%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.navbar h2 {
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: var(--primary-purple);
-    letter-spacing: -0.5px;
-}
-
-.admin-link {
-    color: var(--text-main);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 8px;
-    transition: all 0.3s;
-    border: 1px solid transparent;
-}
-
-.admin-link:hover {
-    border-color: var(--primary-purple);
-    color: var(--primary-purple);
-}
-
-/* ───────── REGISTRO (Fondo Azul Muy Claro) ───────── */
-#overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: var(--ice-blue); /* Fondo azul gélido solicitado */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-#modal {
-    background: var(--white);
-    padding: 3rem;
-    border-radius: 24px;
-    width: 90%;
-    max-width: 420px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
-}
-
-#modal h3 {
-    font-weight: 800;
-    color: var(--text-main);
-    font-size: 1.8rem;
-    margin-bottom: 8px;
-}
-
-#modal p {
-    color: #718096;
-    margin-bottom: 2rem;
-}
-
-#modal input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 12px;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 12px;
-    font-size: 1rem;
-    background: #F8FAFC;
-    transition: all 0.3s;
-}
-
-#modal input:focus {
-    outline: none;
-    border-color: var(--action-red); /* Acento rojo al escribir */
-    background: white;
-    box-shadow: 0 0 0 4px rgba(239, 35, 60, 0.1);
-}
-
-#btnRegistrar {
-    width: 100%;
-    padding: 16px;
-    background-color: var(--action-red);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-}
-
-#btnRegistrar:hover {
-    background-color: #4B2C82;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(157, 35, 239, 0.3);
-}
-
-/* ───────── CONTENIDO PRINCIPAL ───────── */
-#contenido {
-    max-width: 1100px;
-    margin: 60px auto;
-    padding: 0 20px;
-}
-
-h1 {
-    font-weight: 800;
-    font-size: 3rem;
-    color: var(--primary-purple);
-    text-align: center;
-    margin-bottom: 50px;
-    letter-spacing: -1.5px;
-}
-
-/* TARJETAS DE CUATRIMESTRE */
-.cuatris {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 25px;
-}
-
-.cuatris button {
-    background: var(--white);
-    border: 1px solid rgba(0,0,0,0.03);
-    padding: 50px 30px;
-    border-radius: 20px;
-    color: var(--primary-purple);
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: var(--shadow-soft);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-}
-
-.cuatris button::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: var(--accent-gold);
-    opacity: 0;
-    transition: 0.3s;
-}
-
-.cuatris button:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(75, 44, 130, 0.1);
-    color: var(--action-red);
-}
-
-.cuatris button:hover::before {
-    opacity: 1;
-}
-
-/* ───────── SECCIÓN COMENTARIOS ───────── */
-div[style*="margin-top:80px"] {
-    background: var(--white);
-    padding: 50px;
-    border-radius: 24px;
-    margin-top: 100px !important;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(0,0,0,0.02);
-}
-
-textarea#comentario {
-    width: 100% !important;
-    max-width: 100% !important;
-    background: var(--ice-blue);
-    border: 1.5px solid transparent;
-    border-radius: 16px;
-    padding: 20px;
-    font-family: inherit;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    transition: all 0.3s;
-}
-
-textarea#comentario:focus {
-    outline: none;
-    border-color: var(--primary-purple);
-    background: white;
-}
-
-button[onclick="enviarComentario()"] {
-    background: var(--primary-purple);
-    color: white;
-    padding: 14px 40px;
-    border: none;
-    border-radius: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-button[onclick="enviarComentario()"]:hover {
-    background: var(--action-red);
-    transform: scale(1.05);
-}
-
-/* MOBILE OPTIMIZATION */
-@media (max-width: 768px) {
-    h1 { font-size: 2.2rem; }
-    .navbar { padding: 1rem 5%; }
-    #modal { padding: 2rem; }
-}
-
-/* ... (Todo el CSS anterior se mantiene igual, agrega esto al final) ... */
-
-/* ESTILOS PARA LOGOS */
-.brand-container {
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Espacio entre logo y texto */
-}
-
-.logo-navbar {
-    height: 60px; /* Tamaño del logo en la barra superior */
-    width: auto;
-}
-
-.header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 50px;
-}
-
-.logo-main {
-    height: 180px; /* Tamaño del logo sobre el título principal */
-    width: auto;
-    margin-bottom: 20px;
-}
-
-/* ESTILO PIE DE PÁGINA */
-.footer {
-    background-color: var(--white);
-    padding: 40px 8%;
-    margin-top: 100px;
-    border-top: 1px solid rgba(0,0,0,0.05);
-    text-align: center;
-}
-
-.footer-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.footer p {
-    color: #718096;
-    font-size: 0.9rem;
-}
-
-.footer-brand {
-    font-weight: 800;
-    color: var(--primary-purple);
-}
-
-/* ───────── RESPONSIVE EXTRA PARA CELULARES ───────── */
-
-@media (max-width: 768px) {
-
-    h1{
-        font-size:1.8rem;
-        line-height:1.2;
-    }
-
-    h5{
-        font-size:0.9rem;
-        padding:0 10px;
-    }
-
-    /* navbar */
-    .navbar{
-        flex-direction:column;
-        gap:10px;
-        text-align:center;
-    }
-
-    .logo-navbar{
-        height:45px;
-    }
-
-    /* logo principal */
-    .logo-main{
-        height:120px;
-    }
-
-    /* tarjetas */
-    .cuatris{
-        grid-template-columns:1fr;
-        gap:15px;
-    }
-
-    .cuatris button{
-        padding:25px;
-        font-size:1rem;
-    }
-
-    /* comentarios */
-    div[style*="margin-top:80px"]{
-        padding:25px;
-    }
-
-    textarea#comentario{
-        width:100% !important;
-        height:90px;
-    }
-
-    button[onclick="enviarComentario()"]{
-        width:100%;
-    }
-
-    /* modal registro */
-    #modal{
-        width:95%;
-        padding:2rem;
-    }
-
-    #modal h3{
-        font-size:1.5rem;
-    }
-
-}
-
-/* CELULARES MUY PEQUEÑOS */
-
-@media (max-width:480px){
-
-    h1{
-        font-size:1.6rem;
-    }
-
-    .navbar h2{
-        font-size:0.9rem;
-    }
-
-    .admin-link{
-        font-size:0.75rem;
-    }
-
-}
-</style>
-
-
 <body>
 
 <div class="navbar">
@@ -408,63 +340,54 @@ button[onclick="enviarComentario()"]:hover {
         <img src="imagenes/Logo.PNG" alt="Logo PIV" class="logo-navbar">
         <h2>Proyecto Institucional de Valores (PIV)</h2>
     </div>
-    <a href="admin.html" class="admin-link">Ingresar como administrador</a>
+    <a href="admin.html" class="admin-link">Admin</a>
 </div>
 
-<!-- ───────── MODAL REGISTRO ───────── -->
 <div id="overlay">
   <div id="modal">
     <h3>Registro obligatorio</h3>
-    <p>Asegurate que tus datos sean los correctos</p>
-
+    <p>Asegúrate que tus datos sean correctos</p>
     <input id="apellido" placeholder="Apellido paterno">
     <input id="nombre" placeholder="Nombre">
     <input id="matricula" placeholder="Matrícula">
-
-    <button id="btnRegistrar">Ingresar</button>
+    <button id="btnRegistrar">Ingresar al Portal</button>
   </div>
 </div>
 
-<!-- ───────── CONTENIDO ───────── -->
 <div id="contenido">
   <div class="header-container">
       <img src="imagenes/Logo.PNG" alt="Logo UPEMOR" class="logo-main">
-      <h1>Biblioteca Virtual UPEMOR</h1>
-          <h5>Elije un cuatrimestre para ver las materias disponibles</h5>
-
+      <h1>Biblioteca Digital UPEMOR</h1>
+      <h5>Elige un cuatrimestre para ver las materias disponibles</h5>
   </div>
 
   <div class="cuatris">
-  <button onclick="abrirCuatri(1, '1cuatri/index1.html')">1° Cuatrimestre</button>
-  <button onclick="abrirCuatri(2, '2cuatri/index2.html')">2° Cuatrimestre</button>
-  <button onclick="abrirCuatri(3, '3cuatri/index3.html')">3° Cuatrimestre</button>
-  <button onclick="abrirCuatri(4, '4cuatri/index4.html')">4° Cuatrimestre</button>
-  <button onclick="abrirCuatri(5, '5cuatri/index5.html')">5° Cuatrimestre</button>
+      <button onclick="abrirCuatri(1, '1cuatri/index1.html')">1° Cuatrimestre</button>
+      <button onclick="abrirCuatri(2, '2cuatri/index2.html')">2° Cuatrimestre</button>
+      <button onclick="abrirCuatri(3, '3cuatri/index3.html')">3° Cuatrimestre</button>
+      <button onclick="abrirCuatri(4, '4cuatri/index4.html')">4° Cuatrimestre</button>
+      <button onclick="abrirCuatri(5, '5cuatri/index5.html')">5° Cuatrimestre</button>
+  </div>
 
-</div>
+  <div class="section-comentarios">
+      <h3>Comentarios</h3>
+      <p>¡Tus comentarios nos ayudan mucho a mejorar!</p>
+      <textarea id="comentario" placeholder="Escribe tu comentario aquí..."></textarea>
+      <button onclick="enviarComentario()">Enviar comentario</button>
+  </div>
 
-<div style="margin-top:80px;text-align:center;">
-  <h3>Comentarios</h3>
-  <h5>¡Nos ayudarias mucho agregando un comentario para mejorar nuestra pagina!</h5>
-  <br>
-  <textarea id="comentario" placeholder="Escribe un comentario..." style="width:300px;height:80px;"></textarea><br><br>
-
-  <button onclick="enviarComentario()">Enviar comentario</button>
-</div>
-<footer class="footer">
-    <div class="footer-content">
-        <span class="footer-brand">Universidad Politécnica del Estado de Morelos</span>
-        <p>© 2026 PIV - Derechos no reservados. Este sitio se mantiene en pie por puro milagro. 5º B TSU-PP | Biblioteca Virtual PIV</p>
-        <p style="font-size: 0.8rem; opacity: 0.6;">Liderazgo de Equipo de Alto Desempeño.</p>
-    </div>
-</footer>
+  <footer class="footer">
+      <span class="footer-brand">Universidad Politécnica del Estado de Morelos</span>
+      <p>© 2026 PIV - Derechos no reservados. Este sitio se mantiene en pie por puro milagro.</p>
+      <p style="font-size: 0.8rem; opacity: 0.6; font-style: italic;">5º B TSU-PP | Biblioteca Virtual PIV | Liderazgo de Equipo de Alto Desempeño</p>
+  </footer>
 </div>
 
 <script>
+// EL SCRIPT SE MANTIENE EXACTAMENTE IGUAL AL TUYO PARA NO ROMPER LA FUNCIONALIDAD
 const API_URL = "https://script.google.com/macros/s/AKfycbxWfpfnxzzA0djGcuz4cPsEkETDWyq96I31GaT0QNKWLMXMC-C2_3nKY9J8UcS98abjIA/exec";
 
 document.addEventListener('DOMContentLoaded', () => {
-
   const overlay   = document.getElementById('overlay');
   const contenido = document.getElementById('contenido');
   const btn       = document.getElementById('btnRegistrar');
@@ -484,11 +407,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const alumno = { apellido, nombre, matricula };
-
-    // ✅ Guardar en navegador
     localStorage.setItem('alumno', JSON.stringify(alumno));
 
-    // ✅ Guardar en Google Sheets (Apps Script)
     try {
       await fetch(API_URL, {
         method: "POST",
@@ -501,23 +421,19 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("Error al guardar en Sheets", e);
     }
 
-    // ✅ Mostrar contenido
     overlay.style.display = 'none';
     contenido.style.display = 'block';
   });
-
 });
 
 function abrirCuatri(numeroCuatri, ruta) {
   const alumno = JSON.parse(localStorage.getItem('alumno'));
-
   if (!alumno || !alumno.matricula) {
     alert("Debes registrarte primero");
     location.reload();
     return;
   }
 
-  // ✅ Registrar click REAL en Google Sheets
   fetch(API_URL, {
     method: "POST",
     body: JSON.stringify({
@@ -530,21 +446,17 @@ function abrirCuatri(numeroCuatri, ruta) {
     console.error("Error registrando cuatrimestre", err);
   });
 
-  // ✅ Redirigir
   window.location.href = ruta;
 }
 
 function enviarComentario(){
-
   const alumno = JSON.parse(localStorage.getItem('alumno'));
-
   if(!alumno){
     alert("Debes registrarte primero");
     return;
   }
 
   const comentario = document.getElementById("comentario").value.trim();
-
   if(!comentario){
     alert("Escribe un comentario");
     return;
@@ -566,9 +478,7 @@ function enviarComentario(){
     console.error("Error enviando comentario", err);
     alert("Error enviando comentario");
   });
-
 }
-
 </script>
 
 </body>
