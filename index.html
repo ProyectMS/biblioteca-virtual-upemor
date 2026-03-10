@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <head>
+    <meta charset="UTF-8">
+    <title>Portal Académico</title>
+    <link rel="icon" type="image/png" href="imagenes/favicon.PNG">
+    
+</head>
+<meta charset="UTF-8">
+<title>Portal Académico</title>
+
+<style>
+/* ESTILO INSTITUCIONAL TECH - PORTAL ACADÉMICO v2 */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary-purple: #4B2C82;
+    --action-red: #EF233C; /* Rojo moderno vibrante */
+    --accent-gold: #FFB703;
+    --ice-blue: #F0F4F8; /* Azul casi blanco solicitado */
+    --white: #FFFFFF;
+    --text-main: #1A1D23;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--ice-blue);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* ───────── NAVBAR MODERNA ───────── */
+.navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1.2rem 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar h2 {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--primary-purple);
+    letter-spacing: -0.5px;
+}
+
+.admin-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    border: 1px solid transparent;
+}
+
+.admin-link:hover {
+    border-color: var(--primary-purple);
+    color: var(--primary-purple);
+}
+
+/* ───────── REGISTRO (Fondo Azul Muy Claro) ───────── */
+#overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: var(--ice-blue); /* Fondo azul gélido solicitado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+#modal {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+}
+
+#modal h3 {
+    font-weight: 800;
+    color: var(--text-main);
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+#modal p {
+    color: #718096;
+    margin-bottom: 2rem;
+}
+
+#modal input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #F8FAFC;
+    transition: all 0.3s;
+}
+
+#modal input:focus {
+    outline: none;
+    border-color: var(--action-red); /* Acento rojo al escribir */
+    background: white;
+    box-shadow: 0 0 0 4px rgba(239, 35, 60, 0.1);
+}
+
+#btnRegistrar {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--action-red);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+#btnRegistrar:hover {
+    background-color: #4B2C82;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(157, 35, 239, 0.3);
+}
+
+/* ───────── CONTENIDO PRINCIPAL ───────── */
+#contenido {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+h1 {
+    font-weight: 800;
+    font-size: 3rem;
+    color: var(--primary-purple);
+    text-align: center;
+    margin-bottom: 50px;
+    letter-spacing: -1.5px;
+}
+
+/* TARJETAS DE CUATRIMESTRE */
+.cuatris {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.cuatris button {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.03);
+    padding: 50px 30px;
+    border-radius: 20px;
+    color: var(--primary-purple);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.cuatris button::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent-gold);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.cuatris button:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(75, 44, 130, 0.1);
+    color: var(--action-red);
+}
+
+.cuatris button:hover::before {
+    opacity: 1;
+}
+
+/* ───────── SECCIÓN COMENTARIOS ───────── */
+div[style*="margin-top:80px"] {
+    background: var(--white);
+    padding: 50px;
+    border-radius: 24px;
+    margin-top: 100px !important;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+textarea#comentario {
+    width: 100% !important;
+    max-width: 100% !important;
+    background: var(--ice-blue);
+    border: 1.5px solid transparent;
+    border-radius: 16px;
+    padding: 20px;
+    font-family: inherit;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+}
+
+textarea#comentario:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    background: white;
+}
+
+button[onclick="enviarComentario()"] {
+    background: var(--primary-purple);
+    color: white;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button[onclick="enviarComentario()"]:hover {
+    background: var(--action-red);
+    transform: scale(1.05);
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    .navbar { padding: 1rem 5%; }
+    #modal { padding: 2rem; }
+}
+
+/* ... (Todo el CSS anterior se mantiene igual, agrega esto al final) ... */
+
+/* ESTILOS PARA LOGOS */
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre logo y texto */
+}
+
+.logo-navbar {
+    height: 60px; /* Tamaño del logo en la barra superior */
+    width: auto;
+}
+
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.logo-main {
+    height: 180px; /* Tamaño del logo sobre el título principal */
+    width: auto;
+    margin-bottom: 20px;
+}
+
+/* ESTILO PIE DE PÁGINA */
+.footer {
+    background-color: var(--white);
+    padding: 40px 8%;
+    margin-top: 100px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer p {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.footer-brand {
+    font-weight: 800;
+    color: var(--primary-purple);
+}
+
+</style>
+
+
+<body>
+
+<div class="navbar">
+    <div class="brand-container">
+        <img src="imagenes/Logo.PNG" alt="Logo PIV" class="logo-navbar">
+        <h2>Proyecto Institucional de Valores (PIV)</h2>
+    </div>
+    <a href="admin.html" class="admin-link">Ingresar como administrador</a>
+</div>
+
+<!-- ───────── MODAL REGISTRO ───────── -->
+<div id="overlay">
+  <div id="modal">
+    <h3>Registro obligatorio</h3>
+    <p>Asegurate que tus datos sean los correctos</p>
+
+    <input id="apellido" placeholder="Apellido paterno">
+    <input id="nombre" placeholder="Nombre">
+    <input id="matricula" placeholder="Matrícula">
+
+    <button id="btnRegistrar">Ingresar</button>
+  </div>
+</div>
+
+<!-- ───────── CONTENIDO ───────── -->
+<div id="contenido">
+  <div class="header-container">
+      <img src="imagenes/Logo.PNG" alt="Logo UPEMOR" class="logo-main">
+      <h1>Biblioteca Virtual UPEMOR</h1>
+          <h5>Elije un cuatrimestre para ver las materias disponibles</h5>
+
+  </div>
+
+  <div class="cuatris">
+  <button onclick="abrirCuatri(1, '1cuatri/index1.html')">1° Cuatrimestre</button>
+  <button onclick="abrirCuatri(2, '2cuatri/index2.html')">2° Cuatrimestre</button>
+  <button onclick="abrirCuatri(3, '3cuatri/index3.html')">3° Cuatrimestre</button>
+  <button onclick="abrirCuatri(4, '4cuatri/index4.html')">4° Cuatrimestre</button>
+  <button onclick="abrirCuatri(5, '5cuatri/index5.html')">5° Cuatrimestre</button>
+
+</div>
+
+<div style="margin-top:80px;text-align:center;">
+  <h3>Comentarios</h3>
+  <h5>¡Nos ayudarias mucho agregando un comentario para mejorar nuestra pagina!</h5>
+  <br>
+  <textarea id="comentario" placeholder="Escribe un comentario..." style="width:300px;height:80px;"></textarea><br><br>
+
+  <button onclick="enviarComentario()">Enviar comentario</button>
+</div>
+<footer class="footer">
+    <div class="footer-content">
+        <span class="footer-brand">Universidad Politécnica del Estado de Morelos</span>
+        <p>© 2026 PIV - Derechos no reservados. Este sitio se mantiene en pie por puro milagro. 5º B TSU-PP | Biblioteca Virtual PIV</p>
+        <p style="font-size: 0.8rem; opacity: 0.6;">Liderazgo de Equipo de Alto Desempeño.</p>
+    </div>
+</footer>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxWfpfnxzzA0djGcuz4cPsEkETDWyq96I31GaT0QNKWLMXMC-C2_3nKY9J8UcS98abjIA/exec";
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const overlay   = document.getElementById('overlay');
+  const contenido = document.getElementById('contenido');
+  const btn       = document.getElementById('btnRegistrar');
+
+  // 🔒 FORZAR REGISTRO
+  overlay.style.display = 'flex';
+  contenido.style.display = 'none';
+
+  btn.addEventListener('click', async () => {
+    const apellido  = document.getElementById('apellido').value.trim();
+    const nombre    = document.getElementById('nombre').value.trim();
+    const matricula = document.getElementById('matricula').value.trim();
+
+    if (!apellido || !nombre || !matricula) {
+      alert('Todos los campos son obligatorios');
+      return;
+    }
+
+    const alumno = { apellido, nombre, matricula };
+
+    // ✅ Guardar en navegador
+    localStorage.setItem('alumno', JSON.stringify(alumno));
+
+    // ✅ Guardar en Google Sheets (Apps Script)
+    try {
+      await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          action: "registro_usuario",
+          ...alumno
+        })
+      });
+    } catch (e) {
+      console.error("Error al guardar en Sheets", e);
+    }
+
+    // ✅ Mostrar contenido
+    overlay.style.display = 'none';
+    contenido.style.display = 'block';
+  });
+
+});
+
+function abrirCuatri(numeroCuatri, ruta) {
+  const alumno = JSON.parse(localStorage.getItem('alumno'));
+
+  if (!alumno || !alumno.matricula) {
+    alert("Debes registrarte primero");
+    location.reload();
+    return;
+  }
+
+  // ✅ Registrar click REAL en Google Sheets
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      action: "register_click",
+      matricula: alumno.matricula,
+      cuatrimestre: numeroCuatri,
+      materia: "ENTRADA_CUATRIMESTRE"
+    })
+  }).catch(err => {
+    console.error("Error registrando cuatrimestre", err);
+  });
+
+  // ✅ Redirigir
+  window.location.href = ruta;
+}
+
+function enviarComentario(){
+
+  const alumno = JSON.parse(localStorage.getItem('alumno'));
+
+  if(!alumno){
+    alert("Debes registrarte primero");
+    return;
+  }
+
+  const comentario = document.getElementById("comentario").value.trim();
+
+  if(!comentario){
+    alert("Escribe un comentario");
+    return;
+  }
+
+  fetch(API_URL,{
+    method:"POST",
+    body: JSON.stringify({
+      action:"guardar_comentario",
+      matricula: alumno.matricula,
+      comentario: comentario
+    })
+  })
+  .then(()=>{
+    alert("Comentario enviado correctamente");
+    document.getElementById("comentario").value="";
+  })
+  .catch(err=>{
+    console.error("Error enviando comentario", err);
+    alert("Error enviando comentario");
+  });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Portal Académico</title>
+<style>
+/* SISTEMA DE DISEÑO ADMIN v3 */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+:root {
+    --primary-purple: #4B2C82;
+    --action-red: #EF233C;
+    --dark-bg: #0F172A; /* Fondo oscuro moderno */
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --white: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--dark-bg);
+    background-image: radial-gradient(circle at top right, #1e1b4b, #0f172a);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ───────── CONTENEDOR LOGIN ───────── */
+#login {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    padding: 3rem;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.6s ease-out;
+}
+
+h2 {
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: -1px;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--action-red);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#btnLogin {
+    background-color: var(--primary-purple);
+    color: white;
+}
+
+#btnLogin:hover {
+    background-color: #6366f1;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* ───────── PANEL DE CONTROL ───────── */
+#panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    padding: 4rem;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: slideUp 0.5s ease-out;
+}
+
+#btnExcel {
+    background: linear-gradient(135deg, #EF233C, #D90429);
+    color: white;
+    font-size: 1.1rem;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#btnExcel:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(239, 35, 60, 0.4);
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+</style>
+</head>
+
+<body>
+
+<div id="login">
+  <h2>Admin Panel</h2>
+  <input id="user" placeholder="Usuario">
+  <input id="pass" type="password" placeholder="Contraseña">
+  <button id="btnLogin">Entrar al Sistema</button>
+</div>
+
+<div id="panel" style="display:none">
+  <h2>¡Bienvenido, Administrador!</h2>
+  <p style="color: #94a3b8; margin-bottom: 30px;">Gestión de datos del proyecto PIV</p>
+  <button id="btnExcel">
+    Descargar Reporte de Clicks (Excel)
+  </button>
+  <br>
+  <a href="#" onclick="location.reload()" style="color: var(--action-red); text-decoration: none; font-size: 0.8rem; opacity: 0.7;">Cerrar Sesión</a>
+</div>
+
+
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxWfpfnxzzA0djGcuz4cPsEkETDWyq96I31GaT0QNKWLMXMC-C2_3nKY9J8UcS98abjIA/exec";
+const USER = "admin";
+const PASS = "PIV335B";
+
+/* LOGIN */
+document.getElementById("btnLogin").addEventListener("click", () => {
+  if (
+    document.getElementById("user").value === USER &&
+    document.getElementById("pass").value === PASS
+  ) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+  } else {
+    alert("Usuario o contraseña incorrectos");
+  }
+});
+
+/* DESCARGAR EXCEL */
+document.getElementById("btnExcel").addEventListener("click", async () => {
+  const btn = document.getElementById("btnExcel");
+  btn.innerText = "Generando archivo...";
+  btn.style.opacity = "0.7";
+  btn.disabled = true;
+
+  try {
+    const response = await fetch(API_URL,{
+      method:"POST",
+      body: JSON.stringify({
+        action:"export_clicks"
+      })
+    });
+
+    const data = await response.json();
+
+    if(data.ok){
+      window.open(data.url,"_blank");
+    }else{
+      alert("Error al generar Excel");
+    }
+  } catch(err){
+    console.error(err);
+    alert("Error descargando Excel");
+  } finally {
+    btn.innerText = "📊 Descargar Reporte de Clicks (Excel)";
+    btn.style.opacity = "1";
+    btn.disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>
