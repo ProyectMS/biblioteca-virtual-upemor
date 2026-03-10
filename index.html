@@ -3,6 +3,7 @@
 <head>
     <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Académico</title>
     <link rel="icon" type="image/png" href="imagenes/favicon.PNG">
     
@@ -313,6 +314,90 @@ button[onclick="enviarComentario()"]:hover {
     color: var(--primary-purple);
 }
 
+/* ───────── RESPONSIVE EXTRA PARA CELULARES ───────── */
+
+@media (max-width: 768px) {
+
+    h1{
+        font-size:1.8rem;
+        line-height:1.2;
+    }
+
+    h5{
+        font-size:0.9rem;
+        padding:0 10px;
+    }
+
+    /* navbar */
+    .navbar{
+        flex-direction:column;
+        gap:10px;
+        text-align:center;
+    }
+
+    .logo-navbar{
+        height:45px;
+    }
+
+    /* logo principal */
+    .logo-main{
+        height:120px;
+    }
+
+    /* tarjetas */
+    .cuatris{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .cuatris button{
+        padding:25px;
+        font-size:1rem;
+    }
+
+    /* comentarios */
+    div[style*="margin-top:80px"]{
+        padding:25px;
+    }
+
+    textarea#comentario{
+        width:100% !important;
+        height:90px;
+    }
+
+    button[onclick="enviarComentario()"]{
+        width:100%;
+    }
+
+    /* modal registro */
+    #modal{
+        width:95%;
+        padding:2rem;
+    }
+
+    #modal h3{
+        font-size:1.5rem;
+    }
+
+}
+
+/* CELULARES MUY PEQUEÑOS */
+
+@media (max-width:480px){
+
+    h1{
+        font-size:1.6rem;
+    }
+
+    .navbar h2{
+        font-size:0.9rem;
+    }
+
+    .admin-link{
+        font-size:0.75rem;
+    }
+
+}
 </style>
 
 
